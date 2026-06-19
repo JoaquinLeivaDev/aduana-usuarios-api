@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@FeignClient(name = "aduana-api", url = "http://localhost:8080")
+@FeignClient(name = "aduana-api", url = "${aduana.api.url}")
 public interface AduanaClient {
 
     @GetMapping("/api/v1/usuarios")
@@ -18,7 +18,8 @@ public interface AduanaClient {
     ApiResponse<UsuarioResponseDTO> crearUsuario(@RequestBody UsuarioRequestDTO dto);
 
     @PutMapping("/api/v1/usuarios/{id}")
-    ApiResponse<UsuarioResponseDTO> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequestDTO dto);
+    ApiResponse<UsuarioResponseDTO> actualizarUsuario(
+            @PathVariable Long id, @RequestBody UsuarioRequestDTO dto);
 
     @DeleteMapping("/api/v1/usuarios/{id}")
     ApiResponse<Void> eliminarUsuario(@PathVariable Long id);

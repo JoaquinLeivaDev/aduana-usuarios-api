@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: aduana-usuarios-api
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+server:
+  port: ${PORT:8082}
+
+aduana:
+  api:
+    url: ${ADUANA_API_URL:http://localhost:8080}

@@ -7,5 +7,5 @@ import lombok.*;
 public class UsuarioResponseDTO {
     private Long id;
     private String username;
-    private String rolNombre;
+    private String nombreRol;
 }

@@ -4,6 +4,8 @@ import cl.duocuc.aduana_usuarios_api.dto.*;
 import cl.duocuc.aduana_usuarios_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,20 +17,37 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    public ApiResponse<List<UsuarioResponseDTO>> listarTodos() { return usuarioService.obtenerTodos(); }
+    public ResponseEntity<ApiResponse<List<UsuarioResponseDTO>>> listarTodos() {
+        return ResponseEntity.ok(usuarioService.obtenerTodos());
+    }
 
     @GetMapping("/{id}")
-    public ApiResponse<UsuarioResponseDTO> buscarPorId(@PathVariable Long id) { return usuarioService.buscarUsuarioPorId(id); }
+    public ResponseEntity<ApiResponse<UsuarioResponseDTO>> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.buscarUsuarioPorId(id));
+    }
 
     @PostMapping
-    public ApiResponse<UsuarioResponseDTO> crear(@RequestBody @Valid UsuarioRequestDTO dto) { return usuarioService.crearUsuario(dto); }
+    public ResponseEntity<ApiResponse<UsuarioResponseDTO>> crear(
+            @RequestBody @Valid UsuarioRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(usuarioService.crearUsuario(dto));
+    }
 
     @PutMapping("/{id}")
-    public ApiResponse<UsuarioResponseDTO> actualizar(@PathVariable Long id, @RequestBody @Valid UsuarioRequestDTO dto) { return usuarioService.actualizarUsuario(id, dto); }
+    public ResponseEntity<ApiResponse<UsuarioResponseDTO>> actualizar(
+            @PathVariable Long id,
+            @RequestBody @Valid UsuarioRequestDTO dto) {
+        return ResponseEntity.ok(usuarioService.actualizarUsuario(id, dto));
+    }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> eliminar(@PathVariable Long id) { return usuarioService.eliminarUsuario(id); }
+    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.eliminarUsuario(id));
+    }
 
     @GetMapping("/{id}/reportes")
-    public ApiResponse<List<ReporteResponseDTO>> obtenerReportes(@PathVariable Long id) { return usuarioService.obtenerReportesPorUsuario(id); }
+    public ResponseEntity<ApiResponse<List<ReporteResponseDTO>>> obtenerReportes(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.obtenerReportesPorUsuario(id));
+    }
 }
